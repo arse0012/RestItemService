@@ -5,25 +5,45 @@ using System.Text;
 namespace ModelLib.Model
 {
     public class Item
-    { 
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Quality { get; set; }
-        public double Quantity { get; set; }
+    {
+        private int _id;
+        private string _name;
+        private string _quality;
+        private double _quantity;
 
         public Item()
         {
-            //empty constructor needed for JSON transfer. Serializable objects.   
+            
         }
 
         public Item(int id, string name, string quality, double quantity)
         {
-            Id = id;
-            Name = name;
-            Quality = quality;
-            Quantity = quantity;
+            _id = id;
+            _name = name;
+            _quality = quality;
+            _quantity = quantity;
         }
 
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
+        }
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+        public string Quality
+        {
+            get => _quality;
+            set => _quality = value;
+        }
+        public double Quantity 
+        { 
+            get => _quantity;
+            set => _quantity = value;
+        }
 
         public override string ToString()
         {

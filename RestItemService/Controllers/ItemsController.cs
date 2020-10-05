@@ -14,7 +14,7 @@ namespace RestItemService.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private static List<Item> items = new List<Item>()
+        private static List<Item> _item = new List<Item>()
         {
             new Item(1, "Bread", "Low", 33),
             new Item(2, "Bread", "Middle", 21),
@@ -28,7 +28,7 @@ namespace RestItemService.Controllers
         [HttpGet]
         public IEnumerable<Item> Get()
         {
-            return items;
+            return _item;
         }
 
         // GET api/<ItemsController>/5
@@ -38,9 +38,9 @@ namespace RestItemService.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)] // http response status
         public IActionResult Get(int id)
         {
-            if (items.Exists(i => i.Id == id))
+            if (_item.Exists(i => i.Id == id))
             {
-                return Ok(items.Find(i => i.Id == id));
+                return Ok(_item.Find(i => i.Id == id));
             }
             return NotFound($"item id {id} not found");
         }
@@ -49,7 +49,7 @@ namespace RestItemService.Controllers
         [Route("Name/{substring}")]
         public IEnumerable<Item> GetFromSubstring(string substring)
         {
-            return items.FindAll(i => i.Name.Contains(substring));
+            return _item.FindAll(i => i.Name.Contains(substring));
         }
 
         //Get Items by there Quality; "Low", "Middle" and "High"
@@ -57,7 +57,7 @@ namespace RestItemService.Controllers
         [Route("Quality/{substring}")]
         public IEnumerable<Item> GetQuality(string substring)
         {
-            return items.FindAll(i => i.Quality.Contains(substring));
+            return _item.FindAll(i => i.Quality.Contains(substring));
         }
 
         //Search and seperating Items by "LowQuantity" and "HighQuantity"
@@ -66,21 +66,21 @@ namespace RestItemService.Controllers
         public IEnumerable<Item> GetWithFilter([FromQuery] FilterItem filter)
         {
             if (filter.HighQuantity == 0) filter.HighQuantity = double.MaxValue;
-            return items.FindAll(i => i.Quantity > filter.LowQuantity && i.Quantity < filter.HighQuantity);
+            return _item.FindAll(i => i.Quantity > filter.LowQuantity && i.Quantity < filter.HighQuantity);
         }
 
         // POST api/<ItemsController>
         [HttpPost]
         public void Post([FromBody] Item value)
         {
-            items.Add(value);
+            _item.Add(value);
         }
 
         // PUT api/<ItemsController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] Item value)
         {
-            Item item = (Item)Get(id);
+            Item item = _item.Find(i => i.Id == id);
             if (item != null)
             {
                 item.Id = value.Id;
@@ -94,8 +94,11 @@ namespace RestItemService.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            Item item = (Item)Get(id);
-            items.Remove(item);
+            Item item = _item.Find(i => i.Id == id);
+            if (item != null)
+            {
+                _item.Remove(item);
+            }
         }
     }
 }

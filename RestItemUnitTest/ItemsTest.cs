@@ -3,23 +3,45 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModelLib.Model;
+using RestItemService.Controllers;
 
 namespace RestItemUnitTest
 {
     [TestClass]
     public class ItemsTest
     {
+        private ItemsController cntr = null;
+
+        [TestInitialize]
+        public void BeforeEachTest()
+        {
+            cntr = new ItemsController();
+        }
+
         [TestMethod]
         public void GetTest()
         {
-            Item item = new Item();
-            item.Id = 7;
-            Assert.AreEqual(7, item.Id);
+            //arrange
+            // i before each test
+
+            //act 
+            List<Item> liste = new List<Item>(cntr.Get());
+
+            //assert
+            Assert.AreEqual(5,liste.Count);
         }
 
         [TestMethod]
         public void GetFromSubstringTest()
         {
+            //arrange
+            // i before each test
+
+            //act
+            List<Item> liste = new List<Item>(cntr.GetFromSubstring("Bread"));
+
+            //assert
+            
 
         }
 
