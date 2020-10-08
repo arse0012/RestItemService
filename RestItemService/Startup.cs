@@ -48,17 +48,17 @@ namespace RestItemService
                     Title = "Items API",
                     Version = "v1.0",
                     Description = "Example of OpenAPI for api/localItems",
-                    TermsOfService = new Uri("/api/Items"),
+                    TermsOfService = new Uri("http://localhost:5000"),
                     Contact = new OpenApiContact()
                     {
-                        Name = "{Arsen}",
-                        Email = "",
-                        Url = new Uri("http://localhost:5000") 
+                        Name = "Arsen",
+                        Email = "arse0012@edu.easj.dk",
+                        Url = new Uri("http://localhost:5000")
                     },
                     License = new OpenApiLicense()
                     {
-                        Name="No licence required",
-                        Url = new Uri("/api/Items")
+                        Name = "No licence required",
+                        Url = new Uri("http://localhost:5000/api/Items")
                     }
                 });
             });
@@ -73,6 +73,7 @@ namespace RestItemService
             }
 
             app.UseSwagger();
+
             app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Items API v1.0");
